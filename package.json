@@ -1,0 +1,64 @@
+{
+  "name": "postcss-syntax",
+  "version": "0.0.2",
+  "description": "postcss-syntax",
+  "main": "lib/index.js",
+  "scripts": {
+    "report-coverage": "codecov",
+    "pretest": "eslint lib test",
+    "test": "nyc mocha --no-timeouts"
+  },
+  "nyc": {
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "all": true,
+    "cache": true,
+    "check-coverage": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gucong3000/postcss-syntax.git"
+  },
+  "keywords": [
+    "postcss",
+    "syntax"
+  ],
+  "author": "gucong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gucong3000/postcss-syntax/issues"
+  },
+  "homepage": "https://github.com/gucong3000/postcss-syntax#readme",
+  "peerDependencies": {
+    "postcss": ">=5.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "codecov": "^3.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^5.1.0",
+    "nyc": "^11.6.0",
+    "postcss": "^6.0.21",
+    "postcss-html": "^0.21.0",
+    "postcss-less": "^1.1.5",
+    "postcss-markdown": "^0.21.0",
+    "postcss-parser-tests": "^6.2.1",
+    "postcss-safe-parser": "^3.0.1",
+    "postcss-sass": "^0.3.0",
+    "postcss-scss": "^1.0.5",
+    "postcss-styled": "0.0.2",
+    "sugarss": "^1.0.1"
+  }
+}
