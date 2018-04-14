@@ -1,7 +1,7 @@
 {
   "name": "postcss-syntax",
-  "version": "0.0.2",
-  "description": "postcss-syntax",
+  "version": "0.0.3",
+  "description": "Automatically switch PostCSS syntax by file extensions",
   "main": "lib/index.js",
   "scripts": {
     "report-coverage": "codecov",
@@ -27,7 +27,9 @@
   },
   "keywords": [
     "postcss",
-    "syntax"
+    "syntax",
+    "switch",
+    "extension"
   ],
   "author": "gucong",
   "license": "MIT",
