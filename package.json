@@ -1,6 +1,6 @@
 {
   "name": "postcss-syntax",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Automatically switch PostCSS syntax by file extensions",
   "main": "lib/index.js",
   "scripts": {
@@ -60,7 +60,7 @@
     "postcss-safe-parser": "^3.0.1",
     "postcss-sass": "^0.3.0",
     "postcss-scss": "^1.0.5",
-    "postcss-styled": "0.0.2",
+    "postcss-styled": "0.1.0",
     "sugarss": "^1.0.1"
   }
 }
