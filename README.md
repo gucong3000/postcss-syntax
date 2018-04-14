@@ -10,7 +10,7 @@ PostCSS Syntax
 	title="Philosopher’s stone, logo of PostCSS"
 	src="http://postcss.github.io/postcss/logo.svg">
 
-[PostCSS](https://github.com/postcss/postcss) auto syntax switch tool
+postcss-syntax can automatically switch the required [PostCSS](https://github.com/postcss/postcss) syntax by file extensions
 
 ## Getting Started
 
@@ -29,9 +29,9 @@ If you want support SCSS/SASS/LESS/SugarSS syntax, you need to install these mod
 
 If you want support HTML (and HTML-like)/Markdown/styled-components file format, you need to install these module:
 
-- SASS: [PostCSS-Markdown](https://github.com/gucong3000/postcss-markdown)
-- LESS: [PostCSS-Styled](https://github.com/gucong3000/postcss-styled)
-- SCSS: [PostCSS-HTML](https://github.com/gucong3000/postcss-html)
+- Markdown: [PostCSS-Markdown](https://github.com/gucong3000/postcss-markdown)
+- styled components: [PostCSS-Styled](https://github.com/gucong3000/postcss-styled)
+- HTML (and HTML-like): [PostCSS-HTML](https://github.com/gucong3000/postcss-html)
 
 ## Use Cases
 
