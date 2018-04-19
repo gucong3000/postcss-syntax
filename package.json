@@ -1,6 +1,6 @@
 {
   "name": "postcss-syntax",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Automatically switch PostCSS syntax by file extensions",
   "main": "lib/index.js",
   "scripts": {
@@ -49,18 +49,19 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "mocha": "^5.1.0",
-    "nyc": "^11.6.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "mocha": "^5.1.1",
+    "nyc": "^11.7.1",
     "postcss": "^6.0.21",
-    "postcss-html": "^0.21.0",
+    "postcss-glamorous": "github:gucong3000/postcss-glamorous#HEAD",
+    "postcss-html": "github:gucong3000/postcss-html#HEAD",
     "postcss-less": "^1.1.5",
-    "postcss-markdown": "^0.21.0",
+    "postcss-markdown": "github:gucong3000/postcss-markdown#HEAD",
     "postcss-parser-tests": "^6.2.1",
     "postcss-safe-parser": "^3.0.1",
     "postcss-sass": "^0.3.0",
     "postcss-scss": "^1.0.5",
-    "postcss-styled": "0.1.0",
+    "postcss-styled": "github:gucong3000/postcss-styled#HEAD",
     "sugarss": "^1.0.1"
   }
 }

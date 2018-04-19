@@ -22,16 +22,17 @@ npm install postcss-syntax --save-dev
 
 If you want support SCSS/SASS/LESS/SugarSS syntax, you need to install these module:
 
-- SCSS: [PostCSS-SCSS](https://github.com/postcss/postcss-scss)
-- SASS: [PostCSS-SASS](https://github.com/aleshaoleg/postcss-sass)
-- LESS: [PostCSS-LESS](https://github.com/shellscape/postcss-less)
-- SugarSS: [SugarSS](https://github.com/postcss/sugarss)
+- SCSS: [postcss-scss](https://github.com/postcss/postcss-scss)
+- SASS: [postcss-sass](https://github.com/aleshaoleg/postcss-sass)
+- LESS: [postcss-less](https://github.com/shellscape/postcss-less)
+- SugarSS: [sugarss](https://github.com/postcss/sugarss)
 
-If you want support HTML (and HTML-like)/Markdown/styled-components file format, you need to install these module:
+If you want support HTML (and HTML-like)/Markdown/CSS-in-JS file format, you need to install these module:
 
-- Markdown: [PostCSS-Markdown](https://github.com/gucong3000/postcss-markdown)
-- styled components: [PostCSS-Styled](https://github.com/gucong3000/postcss-styled)
-- HTML (and HTML-like): [PostCSS-HTML](https://github.com/gucong3000/postcss-html)
+- styled components: [postcss-styled](https://github.com/gucong3000/postcss-styled)
+- styled glamorous: [postcss-glamorous](https://github.com/gucong3000/postcss-glamorous)
+- HTML (and HTML-like): [postcss-html](https://github.com/gucong3000/postcss-html)
+- Markdown: [postcss-markdown](https://github.com/gucong3000/postcss-markdown)
 
 ## Use Cases
 
@@ -41,15 +42,15 @@ const syntax = require('postcss-syntax')({
 	processors: [
 		{
 			test: /\.(?:[sx]?html?|[sx]ht|vue|ux|php)$/i,
-			split: 'html',
+			extract: 'html',
 		},
 		{
 			test: /\.(?:markdown|md)$/i,
-			split: 'markdown',
+			extract: 'markdown',
 		},
 		{
 			test: /\.(?:m?[jt]sx?|es\d*|pac)$/i,
-			split: 'styled',
+			extract: 'styled',
 		},
 		{
 			// custom file extension

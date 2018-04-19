@@ -1,37 +1,18 @@
 "use strict";
-/* eslint-disable */
-function testcase () {
-	const Button = styled.button`
-		/* Adapt the colours based on primary prop */
-		background: ${props => props.primary ? 'palevioletred' : 'white'};
-		color: ${props => props.primary ? 'white' : 'palevioletred'};
-
-		font-size: 1em;
-		margin: 1em;
-		padding: 0.25em 1em;
-		border: 2px solid palevioletred;
-		border-radius: 3px;
-	`;
-}
-
-/* eslint-enable */
-
 const expect = require("chai").expect;
 const postcss = require("postcss");
-const syntax = require("../lib/syntax")(require("postcss-styled/lib/split"))();
+const syntax = require("../lib/syntax")(require("postcss-styled/lib/extract"))();
 const fs = require("fs");
 
 describe("javascript tests", () => {
 	it("styled-components", () => {
-		let code = fs.readFileSync(__filename, "utf8");
-		let codeStart = "function testcase () {";
-		codeStart = code.indexOf(codeStart) + codeStart.length;
-		code = code.slice(codeStart, code.indexOf("/* eslint-enable */", codeStart) - 3).trim();
-		const lines = code.match(/^.+$/gm).map(line => (line.replace(/^\s*(.+?);?\s*$/, "$1")));
-		lines.shift();
+		const file = require.resolve("./fixtures/styled");
+		const code = fs.readFileSync(file, "utf8");
+
+		const lines = code.match(/^.+$/gm).slice(3).map(line => (line.replace(/^\s*(.+?);?\s*$/, "$1")));
 
 		const root = syntax.parse(code, {
-			from: __filename,
+			from: file,
 		});
 
 		expect(root.nodes).to.have.lengthOf(1);
