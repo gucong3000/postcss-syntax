@@ -15,7 +15,7 @@ describe("api", () => {
 	});
 
 	it("parse error", () => {
-		const syntax = require("../lib/syntax")(require("postcss-html/lib/split"))({
+		const syntax = require("../lib/syntax")(require("postcss-html/lib/extract"))({
 			css: {
 				parse: () => {
 					throw new Error("mock parse error");
@@ -32,11 +32,11 @@ describe("api", () => {
 			rules: [
 				{
 					test: /.*/,
-					split: () => null,
+					extract: () => null,
 				},
 				{
 					test: /.*/,
-					split: "html",
+					extract: "html",
 				},
 			],
 		}).parse(
@@ -54,7 +54,7 @@ describe("api", () => {
 					opts: {
 						loaderOpts: "mock",
 					},
-					split: (source, opts) => {
+					extract: (source, opts) => {
 						result = opts;
 					},
 				},

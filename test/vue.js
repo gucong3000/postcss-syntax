@@ -1,7 +1,7 @@
 "use strict";
 
 const expect = require("chai").expect;
-const syntax = require("../lib/syntax")(require("postcss-html/lib/split"))({
+const syntax = require("../lib/syntax")(require("postcss-html/lib/extract"))({
 	stylus: "css",
 });
 
