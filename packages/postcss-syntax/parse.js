@@ -19,9 +19,3 @@ function parse (source, opts) {
 }
 
 module.exports = parse;
-
-const Node = require("postcss/lib/node").prototype;
-const NodeToString = Node.toString;
-Node.toString = function toString (stringifier) {
-	return NodeToString.call(this, stringifier || this.root().source.syntax);
-};

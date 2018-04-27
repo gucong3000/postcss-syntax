@@ -6,7 +6,7 @@ function processor (source, rules, opts) {
 	rules = rules && rules.filter(rule => rule.extract).map(rule => {
 		if (typeof rule.extract === "string") {
 			rule.extract = rule.extract.toLowerCase().replace(/^(postcss-)?/i, "postcss-");
-			rule.extract = require(rule.extract + "/lib/extract");
+			rule.extract = require(rule.extract + "/extract");
 		}
 		return rule;
 	});

@@ -41,11 +41,7 @@ const defaultConfig = {
 		},
 		{
 			test: /\.(?:m?[jt]sx?|es\d*|pac)$/i,
-			extract: "styled",
-		},
-		{
-			test: /\.(?:m?[jt]sx?|es\d*|pac)$/i,
-			extract: "glamorous",
+			extract: "jsx",
 		},
 	],
 };

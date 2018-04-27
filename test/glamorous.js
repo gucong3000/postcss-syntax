@@ -1,10 +1,10 @@
 "use strict";
 const expect = require("chai").expect;
-const syntax = require("../lib/syntax")(require("postcss-glamorous/lib/extract"))();
+const syntax = require("../packages/postcss-jsx");
 const fs = require("fs");
 
 describe("javascript tests", () => {
-	it("glamorous-components", () => {
+	it("glamorous", () => {
 		const filename = require.resolve("./fixtures/glamorous.jsx");
 		const code = fs.readFileSync(filename, "utf8");
 

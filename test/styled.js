@@ -1,7 +1,6 @@
 "use strict";
 const expect = require("chai").expect;
-const postcss = require("postcss");
-const syntax = require("../lib/syntax")(require("postcss-styled/lib/extract"))();
+const syntax = require("../packages/postcss-jsx");
 const fs = require("fs");
 
 describe("javascript tests", () => {
@@ -37,30 +36,34 @@ describe("javascript tests", () => {
 			"}",
 			"",
 		].join("\n");
-		return postcss([
-			root => {
-				expect(root.nodes).to.have.lengthOf(0);
-			},
-		]).process(code, {
-			syntax: syntax,
+		const root = syntax.parse(code, {
 			from: "empty_template_literal.js",
-		}).then(result => {
-			expect(result.content).to.equal(code);
 		});
+		expect(root.nodes).to.have.lengthOf(0);
+		expect(root.toString()).to.equal(code);
 	});
 
 	it("skip javascript syntax error", () => {
 		const code = "\\`";
-		return postcss([
-			root => {
-				expect(root.nodes).to.have.lengthOf(0);
-			},
-		]).process(code, {
-			syntax: syntax,
+		const root = syntax.parse(code, {
 			from: "syntax_error.js",
-		}).then(result => {
-			expect(result.content).to.equal(code);
 		});
+		expect(root.nodes).to.have.lengthOf(0);
+		expect(root.toString()).to.equal(code);
+	});
+
+	it("illegal template literal", () => {
+		const code = "`$\n{display: block}\n${g} {}`";
+		const root = syntax.parse(code, {
+			from: "illegal_template_literal.js",
+		});
+		expect(root.nodes).to.have.lengthOf(1);
+		expect(root.first.nodes).to.have.lengthOf(2);
+		expect(root.first.first).have.property("type", "rule");
+		expect(root.first.first).have.property("selector", "$");
+		expect(root.last.last).have.property("type", "rule");
+		expect(root.last.last).have.property("selector", "${g}");
+		expect(root.toString()).to.equal(code);
 	});
 
 	it("skip CSS syntax error", () => {
@@ -70,5 +73,33 @@ describe("javascript tests", () => {
 		});
 		expect(root.nodes).to.have.lengthOf(0);
 		expect(root.toString()).to.equal(code);
+	});
+
+	it("fix CSS syntax error", () => {
+		const code = "`a{`";
+		const root = syntax({
+			css: "safe-parser",
+		}).parse(code, {
+			from: "postcss-safe-parser.js",
+		});
+		expect(root.nodes).to.have.lengthOf(1);
+		expect(root.toString()).to.equal("`a{}`");
+		expect(root.first.nodes).to.have.lengthOf(1);
+		expect(root.first.first).have.property("type", "rule");
+		expect(root.first.first).have.property("selector", "a");
+	});
+
+	it("fix styled syntax error", () => {
+		const code = "`${ a } {`";
+		const root = syntax({
+			css: "safe-parser",
+		}).parse(code, {
+			from: "styled-safe-parse.js",
+		});
+		expect(root.nodes).to.have.lengthOf(1);
+		expect(root.toString()).to.equal("`${ a } {}`");
+		expect(root.first.nodes).to.have.lengthOf(1);
+		expect(root.first.first).have.property("type", "rule");
+		expect(root.first.first).have.property("selector", "${ a }");
 	});
 });
