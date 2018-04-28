@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/gucong3000/postcss-syntax#readme",
   "devDependencies": {
-    "autoprefixer": "^8.3.0",
+    "autoprefixer": "^8.4.0",
     "chai": "^4.1.2",
     "codecov": "^3.0.1",
     "eslint": "^4.19.1",
@@ -46,11 +46,13 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.1.0",
     "exec-extra": "^2.3.2",
+    "json5": "^1.0.1",
     "lerna": "^2.11.0",
     "mocha": "^5.1.1",
     "nyc": "^11.7.1",
-    "postcss": "^6.0.21",
+    "postcss": "^6.0.22",
     "postcss-less": "^1.1.5",
+    "postcss-parser-tests": "^6.2.1",
     "postcss-safe-parser": "^3.0.1",
     "postcss-scss": "^1.0.5",
     "sugarss": "^1.0.1"

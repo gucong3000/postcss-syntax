@@ -26,9 +26,9 @@ If you want support SCSS/SASS/LESS/SugarSS syntax, you need to install these mod
 
 If you want support HTML (and HTML-like)/Markdown/CSS-in-JS file format, you need to install these module:
 
-- CSS-in-JS: [postcss-jsx](../postcss-jsx)
-- HTML (and HTML-like): [postcss-html](../postcss-html)
-- Markdown: [postcss-markdown](../postcss-markdown)
+- CSS-in-JS: [postcss-jsx](../postcss-jsx#readme)
+- HTML (and HTML-like): [postcss-html](../postcss-html#readme)
+- Markdown: [postcss-markdown](../postcss-markdown#readme)
 
 ## Use Cases
 

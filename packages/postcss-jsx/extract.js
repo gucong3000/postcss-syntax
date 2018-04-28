@@ -150,18 +150,18 @@ function literalParser (source, opts, styles) {
 		};
 	});
 
-	let styledSyntax;
+	let templateSyntax;
 
-	function getStyledSyntax () {
-		if (!styledSyntax) {
+	function getTemplateSyntax () {
+		if (!templateSyntax) {
 			const getSyntax = require("postcss-syntax/get-syntax");
 			const cssSyntax = getSyntax("css", opts);
-			styledSyntax = {
+			templateSyntax = {
 				parse: require(cssSyntax.parse.name === "safeParse" ? "./template-safe-parse" : "./template-parse"),
 				stringify: cssSyntax.stringify,
 			};
 		}
-		return styledSyntax;
+		return templateSyntax;
 	}
 
 	tpls = tpls.filter(path => (
@@ -183,7 +183,7 @@ function literalParser (source, opts, styles) {
 			ignoreErrors: true,
 		};
 		if (value.length > 1) {
-			style.syntax = getStyledSyntax();
+			style.syntax = getTemplateSyntax();
 			style.lang = "template-literal";
 		} else {
 			style.lang = "css";

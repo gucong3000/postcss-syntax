@@ -1,6 +1,6 @@
 {
   "name": "postcss-html",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "description": "PostCSS syntax for parsing HTML (and HTML-like)",
   "repository": {
     "type": "git",
@@ -31,9 +31,9 @@
   },
   "peerDependencies": {
     "postcss": ">=5.0.0",
-    "postcss-syntax": "^0.2.0"
+    "postcss-syntax": "^0.3.0"
   },
   "devDependencies": {
-    "postcss-syntax": "^0.2.0"
+    "postcss-syntax": "^0.3.0"
   }
 }

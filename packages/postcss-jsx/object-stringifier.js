@@ -1,7 +1,8 @@
 "use strict";
 const Stringifier = require("postcss/lib/stringifier");
+const camelCase = require("./camel-case");
 
-module.exports = class ScssStringifier extends Stringifier {
+class ObjectStringifier extends Stringifier {
 	obj (node, semicolon) {
 		this.builder("{", node, "start");
 
@@ -20,7 +21,10 @@ module.exports = class ScssStringifier extends Stringifier {
 		this.builder(node.text + (semicolon ? "," : ""));
 	}
 	decl (node, semicolon) {
-		const prop = this.rawValue(node, "prop");
+		let prop = this.rawValue(node, "prop");
+		if (prop === "float") {
+			prop = "cssFloat";
+		}
 		const between = this.raw(node, "between", "colon");
 		const value = this.rawValue(node, "value");
 		let string = prop + between + value;
@@ -32,20 +36,22 @@ module.exports = class ScssStringifier extends Stringifier {
 		this.block(node, this.rawValue(node, "selector"), semicolon);
 	}
 	atrule (node, semicolon) {
-		let name = this.rawValue(node, "name");
+		const name = this.rawValue(node, "name");
 		const params = this.rawValue(node, "params");
-
-		if (typeof node.raws.afterName !== "undefined") {
-			name += node.raws.afterName;
-		} else if (params) {
-			name += " ";
-		}
-
 		if (node.nodes) {
-			this.block(node, name + params, semicolon);
+			let string;
+			if (params) {
+				const afterName = this.raw(node, "afterName");
+				string = name + afterName + params;
+			} else {
+				string = name;
+			}
+			this.block(node, string, semicolon);
 		} else {
-			const end = (node.raws.between || "") + (semicolon ? "," : "");
-			this.builder(name + params + end, node);
+			const between = this.raw(node, "between", "colon");
+			let string = name + between + params;
+			if (semicolon) string += ",";
+			this.builder(string, node);
 		}
 	}
 	block (node, start, semicolon) {
@@ -65,20 +71,49 @@ module.exports = class ScssStringifier extends Stringifier {
 			this.builder("/*" + left + node.text + right + "*/", node);
 		}
 	}
-	rawValue (node, prop) {
-		let value = node[prop];
-		const raw = node.raws[prop];
-		if (raw) {
-			if (raw.value === value) {
-				value = raw.raw;
-			}
-			if (raw.prefix) {
-				value = raw.prefix + value;
-			}
-			if (raw.suffix) {
-				value += raw.suffix;
-			}
+	raw (node, own, detect) {
+		let value = super.raw(node, own, detect);
+		if ((own === "between" || (own === "afterName" && node.type === "atrule" && !node.nodes)) && !/:/.test(value)) {
+			value = ":" + value;
+		} else if (own === "before" && /^(decl|rule)$/.test(node.type)) {
+			value = value.replace(/\S+$/, "");
 		}
 		return value;
 	}
+	rawValue (node, prop) {
+		const raw = node.raws[prop];
+		if (raw) {
+			const descriptor = Object.getOwnPropertyDescriptor(raw, "raw");
+			if (descriptor && descriptor.get) {
+				return raw.prefix + raw.raw + raw.suffix;
+			}
+		}
+
+		let value = super.rawValue(node, prop);
+		if (value == null) {
+			return value;
+		}
+		if (/^(prop|selector)$/i.test(prop)) {
+			value = camelCase(value);
+			if (node.raws.before && /(\S+)$/.test(node.raws.before)) {
+				value = RegExp.$1 + value;
+			} else if (value && !/\W/.test(value)) {
+				return value;
+			}
+		} else if (node.type === "atrule") {
+			if (prop === "name") {
+				value = "@" + value;
+			} else if (node.nodes) {
+				return;
+			}
+			if (node.nodes) {
+				value += this.raw(node, "afterName");
+				value += super.rawValue(node, "params");
+			}
+		}
+		value = JSON.stringify(value);
+		return value;
+	}
 };
+
+module.exports = ObjectStringifier;
