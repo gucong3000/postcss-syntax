@@ -1,6 +1,8 @@
 "use strict";
 
 const getSyntax = require("./get-syntax");
+const patch = require("./patch-postcss");
+
 const extToLang = {
 	"sugarss": /^s(?:ugar)?ss$/i,
 	"stylus": /^styl(?:us)?$/i,
@@ -10,9 +12,11 @@ const extToLang = {
 	"css": /^(?:wx|\w*c)ss$/i,
 	"html": /^(?:[sx]?html?|[sx]ht|vue|ux|php)$/i,
 	"markdown": /^(?:markdown|md)$/i,
+	"jsx": /^(?:m?[jt]sx?|es\d*|pac)$/i,
 };
 
 function parser (source, rules, opts) {
+	patch();
 	let lang = rules.find(rule => rule.lang);
 	if (lang) {
 		lang = lang.lang;

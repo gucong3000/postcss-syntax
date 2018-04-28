@@ -3,6 +3,7 @@ const reNewLine = /(?:\r?\n|\r)/gm;
 const Input = require("postcss/lib/input");
 const Document = require("./document");
 const getSyntax = require("./get-syntax");
+const patch = require("./patch-postcss");
 
 class LocalFixer {
 	constructor (lines, style) {
@@ -52,19 +53,23 @@ class LocalFixer {
 		const style = this.style;
 		const syntax = style.syntax || getSyntax(style.lang || "css", opts);
 		let root = style.root;
-		if (!root) {
-			try {
-				root = syntax.parse(style.content, Object.assign({}, opts, {
-					map: false,
-				}));
-			} catch (error) {
-				if (style.ignoreErrors) {
-					return;
-				}
+		try {
+			root = syntax.parse(style.content, Object.assign({}, opts, {
+				map: false,
+			}));
+		} catch (error) {
+			if (style.ignoreErrors) {
+				return;
+			} else if (style.skipConvert) {
+				throw error;
+			} else {
 				throw this.error(error);
 			}
+		}
+		if (!style.skipConvert) {
 			this.root(root);
 		}
+
 		root.source.inline = Boolean(style.inline);
 		root.source.lang = style.lang;
 		root.source.syntax = syntax;
@@ -86,6 +91,8 @@ function docFixer (source, opts) {
 }
 
 function parseStyle (source, opts, styles) {
+	patch(Document);
+
 	const document = new Document();
 
 	let index = 0;
@@ -102,6 +109,7 @@ function parseStyle (source, opts, styles) {
 				} else {
 					index = style.startIndex + (style.content || root.source.input.css).length;
 				}
+				root.document = document;
 				document.nodes.push(root);
 			}
 		});

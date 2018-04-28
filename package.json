@@ -4,15 +4,13 @@
   "description": "Automatically switch PostCSS syntax by file extensions",
   "main": "lib/index.js",
   "scripts": {
+    "install": "lerna bootstrap",
     "report-coverage": "codecov",
-    "pretest": "eslint lib test",
+    "eslint": "eslint $(git ls-files | grep \\.js$)",
+    "pretest": "env npm run eslint",
     "test": "nyc mocha --no-timeouts"
   },
   "nyc": {
-    "lines": 100,
-    "statements": 100,
-    "functions": 100,
-    "branches": 100,
     "reporter": [
       "lcov",
       "text"
@@ -37,31 +35,24 @@
     "url": "https://github.com/gucong3000/postcss-syntax/issues"
   },
   "homepage": "https://github.com/gucong3000/postcss-syntax#readme",
-  "peerDependencies": {
-    "postcss": ">=5.0.0"
-  },
-  "dependencies": {},
   "devDependencies": {
+    "autoprefixer": "^8.3.0",
     "chai": "^4.1.2",
-    "codecov": "^3.0.0",
+    "codecov": "^3.0.1",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.1.0",
+    "exec-extra": "^2.3.2",
+    "lerna": "^2.11.0",
     "mocha": "^5.1.1",
     "nyc": "^11.7.1",
     "postcss": "^6.0.21",
-    "postcss-glamorous": "github:gucong3000/postcss-glamorous#HEAD",
-    "postcss-html": "github:gucong3000/postcss-html#HEAD",
     "postcss-less": "^1.1.5",
-    "postcss-markdown": "github:gucong3000/postcss-markdown#HEAD",
-    "postcss-parser-tests": "^6.2.1",
     "postcss-safe-parser": "^3.0.1",
-    "postcss-sass": "^0.3.0",
     "postcss-scss": "^1.0.5",
-    "postcss-styled": "github:gucong3000/postcss-styled#HEAD",
     "sugarss": "^1.0.1"
   }
 }

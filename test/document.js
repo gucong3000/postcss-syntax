@@ -2,7 +2,7 @@
 
 const expect = require("chai").expect;
 const postcss = require("postcss");
-const syntax = require("../lib/syntax")(require("postcss-html/lib/extract"));
+const syntax = require("../packages/postcss-syntax/syntax")(require("../packages/postcss-html/extract"));
 
 describe("document tests", () => {
 	it("stringify for append node", () => {
