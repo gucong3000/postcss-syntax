@@ -1,24 +1,7 @@
 {
   "name": "postcss-syntax",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "Automatically switch PostCSS syntax by file extensions",
-  "main": "lib/index.js",
-  "scripts": {
-    "install": "lerna bootstrap",
-    "report-coverage": "codecov",
-    "eslint": "eslint $(git ls-files | grep \\.js$)",
-    "pretest": "env npm run eslint",
-    "test": "nyc mocha --no-timeouts"
-  },
-  "nyc": {
-    "reporter": [
-      "lcov",
-      "text"
-    ],
-    "all": true,
-    "cache": true,
-    "check-coverage": true
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gucong3000/postcss-syntax.git"
@@ -35,26 +18,41 @@
     "url": "https://github.com/gucong3000/postcss-syntax/issues"
   },
   "homepage": "https://github.com/gucong3000/postcss-syntax#readme",
-  "devDependencies": {
-    "autoprefixer": "^8.4.0",
-    "chai": "^4.1.2",
-    "codecov": "^3.0.1",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "exec-extra": "^2.3.2",
-    "json5": "^1.0.1",
-    "lerna": "^2.11.0",
-    "mocha": "^5.1.1",
-    "nyc": "^11.7.1",
-    "postcss": "^6.0.22",
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "all": true,
+    "cache": true,
+    "check-coverage": true
+  },
+  "scripts": {
+    "test": "nyc mocha --no-timeouts"
+  },
+  "dependencies": {
+    "htmlparser2": "^3.9.2"
+  },
+  "peerDependencies": {
+    "postcss": ">=5.0.0"
+  },
+  "optionalDependencies": {
+    "postcss-html": "^0.23.2",
+    "postcss-jsx": "^0.5.0",
+    "postcss-markdown": "^0.23.0",
     "postcss-less": "^1.1.5",
-    "postcss-parser-tests": "^6.2.1",
     "postcss-safe-parser": "^3.0.1",
+    "postcss-sass": "^0.3.1",
     "postcss-scss": "^1.0.5",
     "sugarss": "^1.0.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "codecov": "^3.0.1",
+    "mocha": "^5.1.1",
+    "nyc": "^11.7.1",
+    "postcss-html": "^0.23.2",
+    "postcss-jsx": "^0.5.0",
+    "postcss-markdown": "^0.23.2"
   }
 }

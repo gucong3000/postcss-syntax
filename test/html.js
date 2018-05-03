@@ -2,7 +2,7 @@
 
 const expect = require("chai").expect;
 const postcss = require("postcss");
-const syntax = require("../packages/postcss-html");
+const syntax = require("../syntax")(require("postcss-html/extract"));
 
 describe("html tests", () => {
 	it("Invalid HTML", () => {

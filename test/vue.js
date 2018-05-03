@@ -1,68 +1,11 @@
 "use strict";
 
 const expect = require("chai").expect;
-const autoprefixer = require("autoprefixer");
-const postcss = require("postcss");
-const syntax = require("../packages/postcss-html")({
+const syntax = require("../syntax")(require("postcss-html/extract"))({
 	stylus: "css",
 });
 
 describe("vue tests", () => {
-	it("autoprefixer", () => {
-		return postcss([
-			autoprefixer({
-				browsers: ["Chrome >= 1"],
-				cascade: false,
-			}),
-		]).process([
-			"<style module=\"style\">",
-			".red {",
-			"  color: red;",
-			"}",
-			"@keyframes fade {",
-			"  from { opacity: 1; } to { opacity: 0; }",
-			"}",
-			".animate {",
-			"  animation: fade 1s;",
-			"}",
-			"</style>",
-			"<style scoped lang=\"stylus\" module>",
-			".red",
-			"  color: red",
-			"</style>",
-			"<script lang='coffee'>",
-			"should skip coffeescript)))",
-			"</script>",
-		].join("\n"), {
-			syntax,
-			from: "autoprefixer.vue",
-		}).then(result => {
-			expect(result.content).to.equal([
-				"<style module=\"style\">",
-				".red {",
-				"  color: red;",
-				"}",
-				"@-webkit-keyframes fade {",
-				"  from { opacity: 1; } to { opacity: 0; }",
-				"}",
-				"@keyframes fade {",
-				"  from { opacity: 1; } to { opacity: 0; }",
-				"}",
-				".animate {",
-				"  -webkit-animation: fade 1s;",
-				"  animation: fade 1s;",
-				"}",
-				"</style>",
-				"<style scoped lang=\"stylus\" module>",
-				".red",
-				"  color: red",
-				"</style>",
-				"<script lang='coffee'>",
-				"should skip coffeescript)))",
-				"</script>",
-			].join("\n"));
-		});
-	});
 	it("vue with empty <style>", () => {
 		const vue = [
 			"<style module=\"style\"></style>",
@@ -83,7 +26,7 @@ describe("vue tests", () => {
 
 	it("vue with lang(s)", () => {
 		const vue = [
-			"<style lang=\"scss?outputStyle=expanded\">",
+			"<style lang=\"scss\">",
 			"//sass style",
 			"//-----------------------------------",
 			"$fontStack:    Helvetica, sans-serif;",
