@@ -5,6 +5,7 @@ const parseStyle = require("./parse-style");
 module.exports = (extract, defaultConfig) => {
 	defaultConfig = defaultConfig || {};
 	function parse (source, opts) {
+		source = source.toString();
 		if (!opts) {
 			opts = {};
 		}

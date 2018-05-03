@@ -63,3 +63,5 @@ typings/
 
 
 # End of https://www.gitignore.io/api/node
+
+/packages/**/package-lock.json

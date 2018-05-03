@@ -31,7 +31,7 @@ postcss([stylelint({ fix: true })]).process(source, { syntax: syntax }).then(fun
 
 input:
 ```javascript
-import glm from 'jsx';
+import glm from 'glamorous';
 const Component1 = glm.a({
 	flexDirectionn: 'row',
 	display: 'inline-block',
@@ -41,7 +41,7 @@ const Component1 = glm.a({
 
 output:
 ```javascript
-import glm from 'jsx';
+import glm from 'glamorous';
 const Component1 = glm.a({
 	color: '#fff',
 	display: 'inline-block',
@@ -51,7 +51,7 @@ const Component1 = glm.a({
 
 ## Advanced Use Cases
 
-See: [postcss-syntax](../postcss-syntax)
+See: [postcss-syntax](../postcss-syntax#readme)
 
 ### Style Transformations
 

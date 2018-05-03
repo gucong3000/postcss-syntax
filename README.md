@@ -3,7 +3,7 @@ PostCSS Syntax
 
 [![Travis](https://img.shields.io/travis/gucong3000/postcss-syntax.svg)](https://travis-ci.org/gucong3000/postcss-syntax)
 [![Codecov](https://img.shields.io/codecov/c/github/gucong3000/postcss-syntax.svg)](https://codecov.io/gh/gucong3000/postcss-syntax)
-[![David](https://img.shields.io/david/gucong3000/postcss-syntax.svg)](https://david-dm.org/gucong3000/postcss-syntax)
+[![David](https://img.shields.io/david/dev/gucong3000/postcss-syntax.svg)](https://david-dm.org/gucong3000/postcss-syntax?type=dev)
 
 <img align="right" width="95" height="95"
 	title="Philosopher’s stone, logo of PostCSS"
@@ -28,9 +28,9 @@ If you want support SCSS/SASS/LESS/SugarSS syntax, you need to install these mod
 
 If you want support HTML (and HTML-like)/Markdown/CSS-in-JS file format, you need to install these module:
 
-- CSS-in-JS: [postcss-jsx](packages/postcss-jsx)
-- HTML (and HTML-like): [postcss-html](packages/postcss-html)
-- Markdown: [postcss-markdown](packages/postcss-markdown)
+- CSS-in-JS: [postcss-jsx](packages/postcss-jsx#readme)
+- HTML (and HTML-like): [postcss-html](packages/postcss-html#readme)
+- Markdown: [postcss-markdown](packages/postcss-markdown#readme)
 
 ## Use Cases
 

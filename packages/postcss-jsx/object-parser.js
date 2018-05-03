@@ -1,5 +1,6 @@
 "use strict";
 const getTemplate = require("./get-template");
+const camelCase = require("./camel-case");
 const Literal = require("./literal");
 const Obj = require("./obj");
 const postcss = require("postcss");
@@ -8,16 +9,17 @@ function forEach (arr, callback) {
 	arr && arr.forEach(callback);
 }
 
-function camelCase (str) {
-	if (str.startsWith("-ms-")) {
-		str = str.slice(1);
-	}
-	return str.replace(/-(\w)/, (dashChar, char) => char.toUpperCase());
+function unCamelCase (str) {
+	return str.replace(/[A-Z]/g, (char) => "-" + char.toLowerCase()).replace(/(^|\b)ms-/, "$1-ms-");
 }
 
-function unCamelCase (str) {
-	return str.replace(/[A-Z]/, (char) => "-" + char.toLowerCase()).replace(/^ms-/, "-ms-");
-}
+const replaceProp = (fn) => (value) => (
+	value.replace(/(\(\s*)(.*?)(\s*:)/g, (s, prefix, prop, suffix) => (
+		prefix + fn(prop) + suffix
+	))
+);
+const camelCaseProp = replaceProp(camelCase);
+const unCamelCaseProp = replaceProp(unCamelCase);
 
 function defineRaws (node, prop, prefix, suffix, props) {
 	if (!props) {
@@ -35,10 +37,20 @@ function defineRaws (node, prop, prefix, suffix, props) {
 
 	if (!props.raw) {
 		props.raw = descriptor;
+	} else if (props.raw === "camel") {
+		props.raw = {
+			enumerable: true,
+			get: () => (
+				camelCase(node[prop])
+			),
+			set: (value) => {
+				node[prop] = unCamelCase(value);
+			},
+		};
 	}
-	if (!props.value) {
-		props.value = descriptor;
-	}
+
+	props.value = descriptor;
+
 	node.raws[prop] = Object.defineProperties({
 		prefix,
 		suffix,
@@ -101,25 +113,31 @@ class objectParser {
 		return parent;
 	}
 	raws (parent, node) {
+		const source = this.input.css;
 		parent.nodes.forEach((child, i) => {
 			if (i) {
-				child.raws.before = this.input.css.slice(parent.nodes[i - 1].raws.node.end, child.raws.node.start).replace(/^\s*,+/, "");
+				child.raws.before = source.slice(parent.nodes[i - 1].raws.node.end, child.raws.node.start).replace(/^\s*,+/, "");
 			} else if (node) {
-				child.raws.before = this.input.css.slice(node.start, child.raws.node.start).replace(/^\s*{+/, "");
+				child.raws.before = source.slice(node.start, child.raws.node.start).replace(/^\s*{+/, "");
 			}
 		});
 		if (node) {
-			parent.raws.after = this.input.css.slice(parent.last.raws.node.end, node.end).replace(/^\s*,+/, () => {
-				parent.raws.semicolon = true;
-				return "";
-			}).replace(/}+\s*$/, "");
+			let semicolon;
+			let after;
+			if (parent.nodes.length) {
+				after = source.slice(parent.last.raws.node.end, node.end).replace(/^\s*,+/, () => {
+					semicolon = true;
+					return "";
+				});
+			} else {
+				after = source.slice(node.start, node.end).replace(/^\s*{/, "");
+			}
+			parent.raws.after = after.replace(/}+\s*$/, "");
+			parent.raws.semicolon = semicolon || false;
 		}
 	}
 
 	sort (node) {
-		if (!node.nodes) {
-			return;
-		}
 		node.nodes = node.nodes.sort((a, b) => (
 			a.raws.node.start - b.raws.node.start
 		));
@@ -131,11 +149,12 @@ class objectParser {
 		let cookedValue;
 		switch (node.type) {
 			case "Identifier": {
-				rawValue = node.name;
+				const isCssFloat = node.name === "cssFloat";
 				return {
 					prefix: "",
 					suffix: "",
-					value: node.name,
+					raw: isCssFloat && node.name,
+					value: isCssFloat ? "float" : node.name,
 				};
 			}
 			case "StringLiteral": {
@@ -180,16 +199,31 @@ class objectParser {
 		if (node.value.type === "ObjectExpression") {
 			let rule;
 			if (/^@(\S+)(\s*)(.*)$/.test(key.value)) {
+				const params = RegExp.$3;
 				const atRule = postcss.atRule({
-					name: RegExp.$1,
-					params: RegExp.$3,
+					name: unCamelCase(RegExp.$1),
 					raws: {
 						afterName: RegExp.$2,
 					},
 					nodes: [],
 				});
-				defineRaws(atRule, "name", key.prefix + "@", null);
-				defineRaws(atRule, "params", null, key.suffix);
+				defineRaws(atRule, "name", key.prefix + "@", params ? "" : key.suffix, {
+					raw: "camel",
+				});
+				if (params) {
+					atRule.params = unCamelCaseProp(params);
+					defineRaws(atRule, "params", "", key.suffix, {
+						raw: {
+							enumerable: true,
+							get: () => (
+								camelCaseProp(atRule.params)
+							),
+							set: (value) => {
+								atRule.params = unCamelCaseProp(value);
+							},
+						},
+					});
+				}
 				rule = atRule;
 			} else {
 				// rule = this.rule(key, keyWrap, node.value, parent);
@@ -204,26 +238,44 @@ class objectParser {
 		}
 
 		const value = this.getNodeValue(node.value, rawValue);
-		const decl = postcss.decl({
-			prop: unCamelCase(key.value),
-			value: value.value,
-		});
 
-		defineRaws(decl, "prop", key.prefix, key.suffix, {
-			raw: {
-				enumerable: true,
-				get: () => (
-					camelCase(decl.prop)
-				),
-				set: (value) => {
-					decl.prop = unCamelCase(value);
-				},
-			},
-		});
+		if (key.value.startsWith("@")) {
+			const atRule = postcss.atRule({
+				name: unCamelCase(key.value),
+				params: value.value,
+			});
+			defineRaws(atRule, "name", key.prefix, key.suffix, {
+				raw: "camel",
+			});
 
-		defineRaws(decl, "value", value.prefix, value.suffix);
-		raw(decl);
-		return decl;
+			defineRaws(atRule, "params", value.prefix, value.suffix);
+			raw(atRule);
+			return atRule;
+		} else {
+			let decl;
+			if (key.raw) {
+				decl = postcss.decl({
+					prop: key.value,
+					value: value.value,
+					raws: {
+						prop: key,
+					},
+				});
+			} else {
+				decl = postcss.decl({
+					prop: unCamelCase(key.value),
+					value: value.value,
+				});
+
+				defineRaws(decl, "prop", key.prefix, key.suffix, {
+					raw: "camel",
+				});
+			}
+
+			defineRaws(decl, "value", value.prefix, value.suffix);
+			raw(decl);
+			return decl;
+		}
 
 		function raw (postcssNode) {
 			postcssNode.raws.between = between;

@@ -47,7 +47,7 @@ If you want support SCSS/SASS/LESS/SugarSS syntax, you need to install these mod
 
 ## Advanced Use Cases
 
-See: [postcss-syntax](../postcss-syntax)
+See: [postcss-syntax](../postcss-syntax#readme)
 
 ### Style Transformations
 

@@ -1,6 +1,6 @@
 {
   "name": "postcss-markdown",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "description": "PostCSS syntax for parsing Markdown",
   "repository": {
     "type": "git",
@@ -26,14 +26,14 @@
   "homepage": "https://github.com/gucong3000/postcss-syntax/tree/master/packages/postcss-markdown#readme",
   "dependencies": {
     "remark": "^9.0.0",
-    "unist-util-find-all-after": "^1.0.1"
+    "unist-util-find-all-after": "^1.0.2"
   },
   "peerDependencies": {
     "postcss": ">=5.0.0",
-    "postcss-syntax": "^0.2.0"
+    "postcss-syntax": "^0.3.0"
   },
   "devDependencies": {
-    "postcss-html": "^v0.22.0",
-    "postcss-syntax": "^0.2.0"
+    "postcss-html": "^0.23.0",
+    "postcss-syntax": "^0.3.0"
   }
 }
