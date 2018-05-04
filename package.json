@@ -1,6 +1,6 @@
 {
   "name": "postcss-syntax",
-  "version": "0.3.1",
+  "version": "0.6.0",
   "description": "Automatically switch PostCSS syntax by file extensions",
   "repository": {
     "type": "git",
@@ -51,8 +51,8 @@
     "codecov": "^3.0.1",
     "mocha": "^5.1.1",
     "nyc": "^11.7.1",
-    "postcss-html": "^0.23.2",
-    "postcss-jsx": "^0.5.0",
-    "postcss-markdown": "^0.23.2"
+    "postcss-html": "^0.23.3",
+    "postcss-jsx": "^0.6.0",
+    "postcss-markdown": "^0.23.3"
   }
 }
