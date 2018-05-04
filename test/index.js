@@ -1,7 +1,7 @@
 "use strict";
 
 const expect = require("chai").expect;
-const syntax = require("../packages/postcss-syntax");
+const syntax = require("../");
 describe("api", () => {
 	it("default", () => {
 		const root = syntax.parse("a{b:c}");
@@ -15,7 +15,7 @@ describe("api", () => {
 	});
 
 	it("parse error", () => {
-		const syntax = require("../packages/postcss-syntax/syntax")(require("../packages/postcss-html/extract"))({
+		const syntax = require("../syntax")(require("postcss-html/extract"))({
 			css: {
 				parse: () => {
 					throw new Error("mock parse error");

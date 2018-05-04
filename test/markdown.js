@@ -1,7 +1,18 @@
 "use strict";
 
 const expect = require("chai").expect;
-const syntax = require("../packages/postcss-markdown");
+const syntax = require("../")({
+	rules: [
+		{
+			test: /\.md$/,
+			extract: require("postcss-html/extract"),
+		},
+		{
+			test: /\.md$/,
+			extract: require("postcss-markdown/extract"),
+		},
+	],
+});
 
 describe("markdown tests", () => {
 	it("CSS", () => {
@@ -40,9 +51,7 @@ describe("markdown tests", () => {
 			"```",
 			"And the end.",
 		].join("\n");
-		const root = syntax({
-			html: require.resolve("../packages/postcss-html"),
-		}).parse(md, {
+		const root = syntax.parse(md, {
 			from: "markdown.md",
 		});
 		expect(root.nodes).to.have.lengthOf(5);

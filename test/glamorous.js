@@ -1,6 +1,6 @@
 "use strict";
 const expect = require("chai").expect;
-const syntax = require("../packages/postcss-jsx");
+const syntax = require("../syntax")(require("postcss-jsx/extract"));
 const fs = require("fs");
 
 describe("javascript tests", () => {

@@ -2,7 +2,7 @@
 
 const expect = require("chai").expect;
 const postcss = require("postcss");
-const syntax = require("../packages/postcss-syntax");
+const syntax = require("../");
 const sugarss = require("sugarss");
 
 describe("SugarSS tests", () => {
