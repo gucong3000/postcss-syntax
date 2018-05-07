@@ -3,7 +3,7 @@ PostCSS Syntax
 
 [![NPM version](https://img.shields.io/npm/v/postcss-syntax.svg?style=flat-square)](https://www.npmjs.com/package/postcss-syntax)
 [![Travis](https://img.shields.io/travis/gucong3000/postcss-syntax.svg)](https://travis-ci.org/gucong3000/postcss-syntax)
-[![Integration](https://img.shields.io/travis/gucong3000/postcss-syntaxes.svg)](https://travis-ci.org/gucong3000/postcss-syntaxes)
+[![Travis](https://img.shields.io/travis/gucong3000/postcss-syntaxes.svg?label=integration)](https://travis-ci.org/gucong3000/postcss-syntaxes)
 [![Codecov](https://img.shields.io/codecov/c/github/gucong3000/postcss-syntax.svg)](https://codecov.io/gh/gucong3000/postcss-syntax)
 [![David](https://img.shields.io/david/dev/gucong3000/postcss-syntax.svg)](https://david-dm.org/gucong3000/postcss-syntax?type=dev)
 
@@ -30,9 +30,9 @@ If you want support SCSS/SASS/LESS/SugarSS syntax, you need to install these mod
 
 If you want support HTML (and HTML-like)/Markdown/CSS-in-JS file format, you need to install these module:
 
-- CSS-in-JS: [postcss-jsx](packages/postcss-jsx#readme)
-- HTML (and HTML-like): [postcss-html](packages/postcss-html#readme)
-- Markdown: [postcss-markdown](packages/postcss-markdown#readme)
+- CSS-in-JS: [postcss-jsx](https://github.com/gucong3000/postcss-jsx)
+- HTML (and HTML-like): [postcss-html](https://github.com/gucong3000/postcss-html)
+- Markdown: [postcss-markdown](https://github.com/gucong3000/postcss-markdown)
 
 ## Use Cases
 
