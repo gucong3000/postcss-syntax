@@ -1,6 +1,6 @@
 {
   "name": "postcss-syntax",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Automatically switch PostCSS syntax by file extensions",
   "repository": {
     "type": "git",
@@ -37,9 +37,9 @@
     "postcss": ">=5.0.0"
   },
   "optionalDependencies": {
-    "postcss-html": "^0.23.2",
-    "postcss-jsx": "^0.5.0",
-    "postcss-markdown": "^0.23.0",
+    "postcss-html": "^0.23.4",
+    "postcss-jsx": "^0.7.0",
+    "postcss-markdown": "^0.23.4",
     "postcss-less": "^1.1.5",
     "postcss-safe-parser": "^3.0.1",
     "postcss-sass": "^0.3.1",
@@ -51,8 +51,8 @@
     "codecov": "^3.0.1",
     "mocha": "^5.1.1",
     "nyc": "^11.7.1",
-    "postcss-html": "^0.23.3",
-    "postcss-jsx": "^0.6.0",
-    "postcss-markdown": "^0.23.3"
+    "postcss-html": "^0.23.4",
+    "postcss-jsx": "^0.7.0",
+    "postcss-markdown": "^0.23.4"
   }
 }
