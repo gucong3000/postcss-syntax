@@ -28,7 +28,7 @@
     "check-coverage": true
   },
   "scripts": {
-    "test": "nyc mocha --no-timeouts"
+    "test": "nyc mocha --require ./test/fixtures/link --no-timeouts"
   },
   "peerDependencies": {
     "postcss": ">=5.0.0"
