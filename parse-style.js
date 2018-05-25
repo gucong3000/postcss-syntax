@@ -51,7 +51,7 @@ class LocalFixer {
 	}
 	parse (opts) {
 		const style = this.style;
-		const syntax = style.syntax || getSyntax(style.lang || "css", opts);
+		const syntax = style.syntax || getSyntax(style.lang, opts);
 		let root = style.root;
 		try {
 			root = syntax.parse(style.content, Object.assign({}, opts, {

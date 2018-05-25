@@ -1,9 +1,7 @@
 "use strict";
 
 const expect = require("chai").expect;
-const syntax = require("../syntax")(require("postcss-html/extract"))({
-	stylus: "css",
-});
+const syntax = require("../syntax")(require("postcss-html/extract"));
 
 describe("vue tests", () => {
 	it("vue with empty <style>", () => {
@@ -12,7 +10,29 @@ describe("vue tests", () => {
 			"<style scoped lang=\"stylus\" module>",
 			"</style>",
 		].join("\n");
-		const root = syntax.parse(vue, {
+		const root = syntax({
+			"css": "css",
+		}).parse(vue, {
+			from: "empty.vue",
+		});
+		expect(root.first.source.lang).to.equal("css");
+		expect(root.last.source.lang).to.equal("stylus");
+		expect(root.nodes).to.have.lengthOf(2);
+		root.nodes.forEach(root => {
+			expect(root.nodes).to.have.lengthOf(0);
+		});
+		expect(root.toString()).to.equal(vue);
+	});
+
+	it("safe-parser", () => {
+		const vue = [
+			"<style module=\"style\"></style>",
+			"<style scoped lang=\"stylus\" module>",
+			"</style>",
+		].join("\n");
+		const root = syntax({
+			css: "postcss-safe-parser",
+		}).parse(vue, {
 			from: "empty.vue",
 		});
 		expect(root.first.source.lang).to.equal("css");
