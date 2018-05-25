@@ -3,7 +3,10 @@ const stringify = require("./stringify");
 const parseStyle = require("./parse-style");
 
 module.exports = (extract, defaultConfig) => {
-	defaultConfig = defaultConfig || {};
+	defaultConfig = defaultConfig || {
+		postcss: "css",
+		stylus: "css",
+	};
 	function parse (source, opts) {
 		source = source.toString();
 		if (!opts) {

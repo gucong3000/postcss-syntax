@@ -28,9 +28,13 @@ function requireSyntax (lang) {
 
 function getSyntax (lang, opts) {
 	let syntax;
+	lang = lang || "css";
 	if (opts.syntax.config[lang]) {
 		syntax = opts.syntax.config[lang];
 		if (typeof syntax === "string") {
+			if (syntax !== lang && opts.syntax.config[syntax]) {
+				return getSyntax(syntax, opts);
+			}
 			syntax = requireSyntax(syntax);
 		} else {
 			syntax = normalize(syntax);
@@ -44,7 +48,7 @@ function getSyntax (lang, opts) {
 		if (/^css$/i.test(lang)) {
 			syntax.stringify = require("postcss/lib/stringify");
 		} else {
-			syntax.stringify = getSyntax("css", opts).stringify;
+			syntax.stringify = getSyntax(null, opts).stringify;
 		}
 	}
 	opts.syntax.config[lang] = syntax;

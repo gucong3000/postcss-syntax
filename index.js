@@ -44,6 +44,8 @@ const defaultConfig = {
 			extract: "jsx",
 		},
 	],
+	postcss: "css",
+	stylus: "css",
 };
 
 function initSyntax (syntax) {
