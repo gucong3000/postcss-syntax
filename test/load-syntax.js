@@ -11,7 +11,6 @@ describe("load-syntax", () => {
 			"\t<span style=\"color:{{notice.color}};font-size:{{notice.font_size}}px\" for=\"{{(index,notice) in showModalData.notice}}\">{{notice.txt}}</span>",
 			"\t<span style=\"color:{{notice.color}};font-size:{{notice.font_size}}px\" for=\"{{(index,notice) in showModalData.notice}}\">{{notice.txt}}</span>",
 			"</template>",
-
 		].join("\n"), {
 			syntax,
 			from: "quickapp.ax",
@@ -28,7 +27,7 @@ describe("load-syntax", () => {
 
 		].join("\n"), {
 			syntax: syntax({
-				css: "postcss-safe-parser",
+				css: require.resolve("postcss-safe-parser"),
 			}),
 			from: "quickapp.ax",
 		}).then(result => {
