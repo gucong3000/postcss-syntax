@@ -13,7 +13,7 @@ describe("load-syntax", () => {
 			"</template>",
 		].join("\n"), {
 			syntax,
-			from: "quickapp.ax",
+			from: "http://somehost.com/??quickapp.ax?v=102234",
 		}).then(result => {
 			expect(result.root.nodes).to.have.lengthOf(2);
 		});
@@ -22,9 +22,8 @@ describe("load-syntax", () => {
 		return postcss().process([
 			"<template>",
 			"\t<span style=\"color:{{notice.color}};font-size:{{notice.font_size}}px\" for=\"{{(index,notice) in showModalData.notice}}\">{{notice.txt}}</span>",
-			"\t<span style=\"color:{{notice.color}};font-size:{{notice.font_size}}px\" for=\"{{(index,notice) in showModalData.notice}}\">{{notice.txt}}</span>",
+			"\t<span style=\"a {\" for=\"{{(index,notice) in showModalData.notice}}\">{{notice.txt}}</span>",
 			"</template>",
-
 		].join("\n"), {
 			syntax: syntax({
 				css: require.resolve("postcss-safe-parser"),
