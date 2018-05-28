@@ -5,13 +5,6 @@ const parse = require("./parse");
 const defaultConfig = {
 	rules: [
 		{
-			// WXSS(WeiXin Style Sheets) See: https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxss.html
-			// acss(AntFinancial Style Sheet) See: https://docs.alipay.com/mini/framework/acss
-			// `*.pcss`, `*.postcss`
-			test: /\.(?:wx|\w*c)ss$/i,
-			lang: "css",
-		},
-		{
 			test: /\.less$/i,
 			lang: "less",
 		},
@@ -30,6 +23,13 @@ const defaultConfig = {
 		{
 			test: /\.styl(?:us)?$/i,
 			lang: "stylus",
+		},
+		{
+			// WXSS(WeiXin Style Sheets) See: https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxss.html
+			// acss(AntFinancial Style Sheet) See: https://docs.alipay.com/mini/framework/acss
+			// `*.pcss`, `*.postcss`
+			test: /\.(?:wx|\w*c)ss$/i,
+			lang: "css",
 		},
 		{
 			test: /\.(?:[sx]?html?|[sx]ht|vue|ux|markdown|md|php)$/i,
