@@ -1,4 +1,6 @@
 "use strict";
+const path = require("path");
+const reSyntaxCSS = /^(?:post)?css$/i;
 
 function cssSyntax () {
 	return {
@@ -6,6 +8,7 @@ function cssSyntax () {
 		parse: require("postcss/lib/parse"),
 	};
 }
+
 function normalize (syntax) {
 	if (!syntax.parse) {
 		syntax = {
@@ -15,15 +18,17 @@ function normalize (syntax) {
 	return syntax;
 }
 
-function requireSyntax (lang) {
-	if (/^css$/i.test(lang)) {
+function requireSyntax (syntax) {
+	if (reSyntaxCSS.test(syntax)) {
 		return cssSyntax();
-	} else if (/^sugarss$/i.test(lang)) {
-		lang = "sugarss";
+	} else if (/^sugarss$/i.test(syntax)) {
+		syntax = "sugarss";
+	} else if (path.isAbsolute(syntax) || syntax.startsWith(".")) {
+		syntax = path.resolve(syntax);
 	} else {
-		lang = lang.toLowerCase().replace(/^(postcss-)?/i, "postcss-");
+		syntax = syntax.toLowerCase().replace(/^(?:postcss-)?(\w+)/i, "postcss-$1");
 	}
-	return normalize(require(lang));
+	return normalize(require(syntax));
 }
 
 function getSyntax (lang, opts) {
@@ -39,13 +44,13 @@ function getSyntax (lang, opts) {
 		} else {
 			syntax = normalize(syntax);
 		}
-	} else if (/^css$/i.test(lang)) {
+	} else if (reSyntaxCSS.test(lang)) {
 		syntax = cssSyntax();
 	} else {
 		return requireSyntax(lang);
 	}
 	if (!syntax.stringify) {
-		if (/^css$/i.test(lang)) {
+		if (reSyntaxCSS.test(lang)) {
 			syntax.stringify = require("postcss/lib/stringify");
 		} else {
 			syntax.stringify = getSyntax(null, opts).stringify;

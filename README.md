@@ -39,7 +39,7 @@ If you want support HTML (and HTML-like)/Markdown/CSS-in-JS file format, you nee
 ```js
 const postcss = require('postcss');
 const syntax = require('postcss-syntax')({
-	processors: [
+	rules: [
 		{
 			test: /\.(?:[sx]?html?|[sx]ht|vue|ux|php)$/i,
 			extract: 'html',
@@ -50,25 +50,31 @@ const syntax = require('postcss-syntax')({
 		},
 		{
 			test: /\.(?:m?[jt]sx?|es\d*|pac)$/i,
-			extract: 'styled',
+			extract: 'jsx',
 		},
 		{
-			// custom file extension
+			// custom language for file extension
 			test: /\.postcss$/i,
 			lang: 'scss'
 		},
 		{
-			// custom syntax engine
+			// custom language for file extension
 			test: /\.customcss$/i,
 			lang: 'custom'
 		},
 	],
-	css: postcss,
+
+	// custom parser for CSS (using `postcss-safe-parser`)
+	css: 'postcss-safe-parser',
+	// custom parser for SASS (PostCSS-compatible syntax.)
 	sass: require('postcss-sass'),
-	scss: require('postcss-scss'),
-	less: require('postcss-less'),
+	// custom parser for SCSS (by module name)
+	scss: 'postcss-scss',
+	// custom parser for LESS (by module path)
+	less: './node_modules/postcss-less',
+	// custom parser for SugarSS
 	sugarss: require('sugarss'),
-	// custom syntax engine
+	// custom parser for custom language
 	custom: require('postcss-custom-syntax'),
 
 });
