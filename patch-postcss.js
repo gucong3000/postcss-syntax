@@ -44,6 +44,7 @@ function patch (Document) {
 	let fn;
 	let file;
 	if (Document) {
+		patch();
 		fn = patchDocument.bind(this, Document);
 		file = "lazy-result";
 	} else {
