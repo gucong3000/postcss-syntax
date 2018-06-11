@@ -32,7 +32,7 @@ const defaultConfig = {
 			lang: "css",
 		},
 		{
-			test: /\.(?:[sx]?html?|[sx]ht|vue|ux|markdown|md|php)$/i,
+			test: /\.(?:[sx]?html?|xml|xslt?|[sx]ht|vue|ux|markdown|md|php)$/i,
 			extract: "html",
 		},
 		{
