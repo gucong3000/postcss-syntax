@@ -52,11 +52,30 @@ describe("default config rules", () => {
 	it("foo.htm", () => {
 		expect(getRule("foo.htm")).to.haveOwnProperty("extract", "html");
 	});
+	it("foo.shtml", () => {
+		expect(getRule("foo.shtml")).to.haveOwnProperty("extract", "html");
+	});
 	it("foo.xht", () => {
 		expect(getRule("foo.xht")).to.haveOwnProperty("extract", "html");
 	});
-	it("foo.shtml", () => {
-		expect(getRule("foo.shtml")).to.haveOwnProperty("extract", "html");
+	it("foo.xhtml", () => {
+		expect(getRule("foo.xhtml")).to.haveOwnProperty("extract", "html");
+	});
+	it("foo.xml", () => {
+		// Just for fault tolerance, XML is not supported except XSLT
+		expect(getRule("foo.xml")).to.haveOwnProperty("extract", "html");
+	});
+	it("foo.xsl", () => {
+		expect(getRule("foo.xsl")).to.haveOwnProperty("extract", "html");
+	});
+	it("foo.xslt", () => {
+		expect(getRule("foo.xslt")).to.haveOwnProperty("extract", "html");
+	});
+	it("foo.vue", () => {
+		expect(getRule("foo.vue")).to.haveOwnProperty("extract", "html");
+	});
+	it("foo.ux", () => {
+		expect(getRule("foo.ux")).to.haveOwnProperty("extract", "html");
 	});
 	it("foo.php", () => {
 		expect(getRule("foo.php")).to.haveOwnProperty("extract", "html");
