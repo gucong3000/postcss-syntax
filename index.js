@@ -32,7 +32,13 @@ const defaultConfig = {
 			lang: "css",
 		},
 		{
-			test: /\.(?:[sx]?html?|xml|xslt?|[sx]ht|vue|ux|markdown|md|php)$/i,
+			// *.xslt?	https://msdn.microsoft.com/en-us/library/ms764661(v=vs.85).aspx
+			// *.vue	https://vue-loader.vuejs.org/spec.html
+			// *.ux		https://doc.quickapp.cn/framework/source-file.html
+			// `*.xml`	Just for fault tolerance, XML is not supported except XSLT
+			// `*.htm`, `*.*htm`
+			// `*.html`, `*.*html`
+			test: /\.(?:\w*html?|x(?:ht|ml|slt?)|markdown|md|php|vue|ux)$/i,
 			extract: "html",
 		},
 		{
