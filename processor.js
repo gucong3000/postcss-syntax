@@ -2,25 +2,27 @@
 
 const parseStyle = require("./parse-style");
 
-function processor (source, rules, opts) {
-	rules = rules && rules.filter(rule => rule.extract).map(rule => {
-		if (typeof rule.extract === "string") {
-			rule.extract = rule.extract.toLowerCase().replace(/^(postcss-)?/i, "postcss-");
-			rule.extract = require(rule.extract + "/extract");
-		}
-		return rule;
-	});
-
-	if (!rules || !rules.length) {
-		return;
+function getSyntax (config, syntax) {
+	if (typeof syntax !== "string") {
+		return syntax;
 	}
-	const styles = rules.reduce(
-		(styles, rule) => (
-			rule.extract(source, Object.assign({}, opts, rule.opts), styles) || styles
-		),
-		[]
-	);
+	let syntaxConfig = config[syntax];
 
+	if (syntaxConfig) {
+		syntaxConfig = getSyntax(config, syntaxConfig);
+	} else {
+		syntaxConfig = {
+			extract: require(syntax.toLowerCase().replace(/^(postcss-)?/i, "postcss-") + "/extract"),
+		};
+		config[syntax] = syntaxConfig;
+	}
+
+	return syntaxConfig;
+}
+
+function processor (source, lang, opts) {
+	const syntax = getSyntax(opts.syntax.config, lang);
+	const styles = (syntax.extract || syntax)(source, opts) || [];
 	return parseStyle(source, opts, styles);
 }
 

@@ -5,11 +5,11 @@ const syntax = require("../")({
 	rules: [
 		{
 			test: /\.md$/,
-			extract: require("postcss-html/extract"),
+			extract: require("postcss-markdown/extract"),
 		},
 		{
-			test: /\.md$/,
-			extract: require("postcss-markdown/extract"),
+			test: /\.html$/,
+			extract: require("postcss-html/extract"),
 		},
 	],
 });

@@ -58,7 +58,7 @@ describe("SugarSS tests", () => {
 		}).parse(sss, {
 			from: "SugarSS.sss",
 		});
-		expect(root.source.lang).to.be.equal("sugarss");
+		expect(root.source).to.haveOwnProperty("lang", "sugarss");
 		expect(root.toString()).to.be.equal(sss);
 		expect(root.toString(root.source.syntax)).to.be.equal(sss);
 	});
@@ -78,7 +78,7 @@ describe("SugarSS tests", () => {
 			syntax,
 			from: "sugarss.vue",
 		}).then(result => {
-			expect(result.root.first.source.lang).equal("sugarss");
+			expect(result.root.first.source).to.haveOwnProperty("lang", "sugarss");
 			expect(result.content).to.equal(vue);
 		});
 	});

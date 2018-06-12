@@ -11,7 +11,7 @@ PostCSS Syntax
 	title="Philosopher’s stone, logo of PostCSS"
 	src="http://postcss.github.io/postcss/logo.svg">
 
-postcss-syntax can automatically switch the required [PostCSS](https://github.com/postcss/postcss) syntax by file extensions
+postcss-syntax can automatically switch the required [PostCSS](https://github.com/postcss/postcss) syntax by file extension/source
 
 ## Getting Started
 
