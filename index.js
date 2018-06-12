@@ -2,56 +2,70 @@
 
 const stringify = require("./stringify");
 const parse = require("./parse");
+const reIsHtml = require("./is-html");
+// https://github.com/Microsoft/vscode/blob/master/extensions/xml/package.json#L11
+const languages = require("./languages");
+
 const defaultConfig = {
 	rules: [
 		{
-			test: /\.less$/i,
-			lang: "less",
-		},
-		{
-			test: /\.sass$/i,
+			test: languages.sass,
 			lang: "sass",
 		},
 		{
-			test: /\.scss$/i,
+			test: languages.scss,
 			lang: "scss",
 		},
 		{
-			test: /\.s(?:ugar)?ss$/i,
+			test: languages.less,
+			lang: "less",
+		},
+		{
+			test: languages.sugarss,
 			lang: "sugarss",
 		},
 		{
-			test: /\.styl(?:us)?$/i,
+			test: languages.stylus,
 			lang: "stylus",
+		},
+		{
+			test: languages.xml,
+			lang: "xml",
 		},
 		{
 			// WXSS(WeiXin Style Sheets) See: https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxss.html
 			// acss(AntFinancial Style Sheet) See: https://docs.alipay.com/mini/framework/acss
 			// `*.pcss`, `*.postcss`
-			test: /\.(?:wx|\w*c)ss$/i,
+			test: languages.css,
 			lang: "css",
 		},
 		{
 			// *.xslt?	https://msdn.microsoft.com/en-us/library/ms764661(v=vs.85).aspx
 			// *.vue	https://vue-loader.vuejs.org/spec.html
 			// *.ux		https://doc.quickapp.cn/framework/source-file.html
-			// `*.xml`	Just for fault tolerance, XML is not supported except XSLT
-			// `*.htm`, `*.*htm`
-			// `*.html`, `*.*html`
-			test: /\.(?:\w*html?|x(?:ht|ml|slt?)|markdown|md|php|vue|ux)$/i,
+			// MTML
+			// Markdown
+			// XML		Just for fault tolerance, XML is not supported except XSLT
+			test: (file, source) => (
+				(file && [
+					languages.html,
+					languages.markdown,
+				].some(re => re.test(file))) || reIsHtml.test(source)
+			),
 			extract: "html",
 		},
 		{
-			test: /\.(?:markdown|md)$/i,
+			test: languages.markdown,
 			extract: "markdown",
 		},
 		{
-			test: /\.(?:m?[jt]sx?|es\d*|pac)$/i,
+			test: languages.jsx,
 			extract: "jsx",
 		},
 	],
 	postcss: "css",
 	stylus: "css",
+	xml: "html",
 };
 
 function initSyntax (syntax) {

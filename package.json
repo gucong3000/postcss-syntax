@@ -45,6 +45,7 @@
     "postcss-markdown": ">=0.28.0",
     "postcss-safe-parser": "^3.0.1",
     "postcss-scss": "^1.0.5",
+    "proxyquire": "^2.0.1",
     "sugarss": "^1.0.1"
   }
 }

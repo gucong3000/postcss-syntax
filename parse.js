@@ -10,13 +10,16 @@ function parse (source, opts) {
 	if (!opts.syntax) {
 		opts.syntax = this;
 	}
+
+	source = source.toString();
+
 	let rules = opts.syntax.config.rules;
 	const file = opts.from ? opts.from.replace(/^(\w+:\/\/.*?\.\w+)(?:[?#].*)?$/, "$1") : "";
 	rules = rules && rules.filter(
-		rule => rule.test.test(file)
+		rule => rule.test.test ? rule.test.test(file) : rule.test(file, source)
 	);
-	source = source.toString();
-	return processor(source, rules, opts) || parser(source, rules, opts);
+
+	return processor(source, rules, opts) || parser(file, source, rules, opts);
 }
 
 module.exports = parse;
