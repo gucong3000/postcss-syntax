@@ -1,8 +1,10 @@
 "use strict";
-const rules = require("../").config.rules;
+let rules;
 const expect = require("chai").expect;
-function getRule (file) {
-	let rst = rules.filter(rule => rule.test.test(file));
+function getRule (file, source) {
+	let rst = rules.filter(
+		rule => rule.test.test ? rule.test.test(file) : rule.test(file, source || "")
+	);
 	if (rst.length === 1) {
 		rst = rst[0];
 	}
@@ -10,6 +12,25 @@ function getRule (file) {
 }
 
 describe("default config rules", () => {
+	before(() => {
+		delete require.cache[require.resolve("../")];
+		rules = require("../").config.rules;
+	});
+	function testcase (lang, extensions) {
+		describe(lang, () => {
+			extensions.forEach(ext => {
+				it("foo." + ext, () => {
+					let rst = getRule("foo." + ext);
+					if (lang === "markdown") {
+						expect(rst).to.lengthOf(2);
+						expect(rst[0]).to.haveOwnProperty("extract", "html");
+						rst = rst[1];
+					}
+					expect(rst).to.haveOwnProperty("extract", lang);
+				});
+			});
+		});
+	}
 	it("foo.css", () => {
 		expect(getRule("foo.css")).to.haveOwnProperty("lang", "css");
 	});
@@ -40,36 +61,37 @@ describe("default config rules", () => {
 	it("foo.sugarss", () => {
 		expect(getRule("foo.sugarss")).to.haveOwnProperty("lang", "sugarss");
 	});
-	it("foo.styl", () => {
-		expect(getRule("foo.styl")).to.haveOwnProperty("lang", "stylus");
+	testcase("html", [
+		// https://github.com/Microsoft/vscode/blob/master/extensions/html/package.json
+		"html",
+		"htm",
+		"shtml",
+		"xhtml",
+		"mdoc",
+		"jsp",
+		"asp",
+		"aspx",
+		"jshtm",
+		"volt",
+		"ejs",
+		"rhtml",
+
+		// https://github.com/jshttp/mime-db/blob/master/db.json
+		// application/xhtml+xml
+		"xht",
+
+		// https://github.com/Microsoft/vscode/blob/master/extensions/xml/package.json #xsl
+		"xsl",
+		"xslt",
+	]);
+	it("<!DOCTYPE html>", () => {
+		expect(getRule("", "<!DOCTYPE html>")).to.haveOwnProperty("extract", "html");
 	});
-	it("foo.stylus", () => {
-		expect(getRule("foo.stylus")).to.haveOwnProperty("lang", "stylus");
+	it("<html lang=\"zh-cn\">", () => {
+		expect(getRule("", "\n<html lang=\"zh-cn\">")).to.haveOwnProperty("extract", "html");
 	});
-	it("foo.html", () => {
-		expect(getRule("foo.html")).to.haveOwnProperty("extract", "html");
-	});
-	it("foo.htm", () => {
-		expect(getRule("foo.htm")).to.haveOwnProperty("extract", "html");
-	});
-	it("foo.shtml", () => {
-		expect(getRule("foo.shtml")).to.haveOwnProperty("extract", "html");
-	});
-	it("foo.xht", () => {
-		expect(getRule("foo.xht")).to.haveOwnProperty("extract", "html");
-	});
-	it("foo.xhtml", () => {
-		expect(getRule("foo.xhtml")).to.haveOwnProperty("extract", "html");
-	});
-	it("foo.xml", () => {
-		// Just for fault tolerance, XML is not supported except XSLT
-		expect(getRule("foo.xml")).to.haveOwnProperty("extract", "html");
-	});
-	it("foo.xsl", () => {
-		expect(getRule("foo.xsl")).to.haveOwnProperty("extract", "html");
-	});
-	it("foo.xslt", () => {
-		expect(getRule("foo.xslt")).to.haveOwnProperty("extract", "html");
+	it("<?xml version=\"1.0\"?>", () => {
+		expect(getRule("", "\n<?xml version=\"1.0\"?>")).to.haveOwnProperty("extract", "html");
 	});
 	it("foo.vue", () => {
 		expect(getRule("foo.vue")).to.haveOwnProperty("extract", "html");
@@ -80,18 +102,17 @@ describe("default config rules", () => {
 	it("foo.php", () => {
 		expect(getRule("foo.php")).to.haveOwnProperty("extract", "html");
 	});
-	it("foo.md", () => {
-		const rst = getRule("foo.md");
-		expect(rst).to.lengthOf(2);
-		expect(rst[0]).to.haveOwnProperty("extract", "html");
-		expect(rst[1]).to.haveOwnProperty("extract", "markdown");
-	});
-	it("foo.markdown", () => {
-		const rst = getRule("foo.markdown");
-		expect(rst).to.lengthOf(2);
-		expect(rst[0]).to.haveOwnProperty("extract", "html");
-		expect(rst[1]).to.haveOwnProperty("extract", "markdown");
-	});
+	testcase("markdown", [
+		// https://github.com/Microsoft/vscode/blob/master/extensions/markdown-basics/package.json
+		"md",
+		"mdown",
+		"markdown",
+		"markdn",
+
+		// https://github.com/jshttp/mime-db/blob/master/db.json
+		// text/x-markdown
+		"mkd",
+	]);
 	it("foo.js", () => {
 		expect(getRule("foo.js")).to.haveOwnProperty("extract", "jsx");
 	});
@@ -112,5 +133,20 @@ describe("default config rules", () => {
 	});
 	it("foo.es2017", () => {
 		expect(getRule("foo.es2017")).to.haveOwnProperty("extract", "jsx");
+	});
+	// Just for fault tolerance, stylus & XML are not supported
+	describe("Fault tolerant", () => {
+		it("foo.styl", () => {
+			expect(getRule("foo.styl")).to.haveOwnProperty("lang", "stylus");
+		});
+		it("foo.stylus", () => {
+			expect(getRule("foo.stylus")).to.haveOwnProperty("lang", "stylus");
+		});
+		it("foo.xml", () => {
+			expect(getRule("foo.xml")).to.haveOwnProperty("lang", "xml");
+		});
+		it("foo.svg", () => {
+			expect(getRule("foo.svg")).to.haveOwnProperty("lang", "xml");
+		});
 	});
 });

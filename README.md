@@ -41,11 +41,11 @@ const postcss = require('postcss');
 const syntax = require('postcss-syntax')({
 	rules: [
 		{
-			test: /\.(?:[sx]?html?|[sx]ht|vue|ux|php)$/i,
+			test: (fileName, source) => /\.html?$/i.test(fileName) || /^\s*<(!DOCTYPE\s+)?html>/i.test(source),
 			extract: 'html',
 		},
 		{
-			test: /\.(?:markdown|md)$/i,
+			test: /\.(?:markdown|mk?d)$/i,
 			extract: 'markdown',
 		},
 		{
