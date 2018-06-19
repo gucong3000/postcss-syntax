@@ -2,10 +2,13 @@
 const stringify = require("./stringify");
 const parseStyle = require("./parse-style");
 
-module.exports = (extract, defaultConfig) => {
-	defaultConfig = defaultConfig || {
+module.exports = (extract, lang) => {
+	const defaultConfig = {
 		postcss: "css",
 		stylus: "css",
+		babel: "jsx",
+		xml: "html",
+		xsl: "html",
 	};
 	function parse (source, opts) {
 		source = source.toString();
@@ -15,7 +18,9 @@ module.exports = (extract, defaultConfig) => {
 		if (!opts.syntax) {
 			opts.syntax = this;
 		}
-		return parseStyle(source, opts, extract(source, opts));
+		const document = parseStyle(source, opts, extract(source, opts));
+		document.source.lang = lang;
+		return document;
 	}
 
 	function initSyntax (syntax) {

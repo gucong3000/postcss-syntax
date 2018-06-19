@@ -2,6 +2,7 @@
 
 const parser = require("./parser");
 const processor = require("./processor");
+const getLang = require("./get-lang");
 
 function parse (source, opts) {
 	if (!opts) {
@@ -10,13 +11,19 @@ function parse (source, opts) {
 	if (!opts.syntax) {
 		opts.syntax = this;
 	}
-	let rules = opts.syntax.config.rules;
-	const file = opts.from ? opts.from.replace(/^(\w+:\/\/.*?\.\w+)(?:[?#].*)?$/, "$1") : "";
-	rules = rules && rules.filter(
-		rule => rule.test.test(file)
-	);
+
 	source = source.toString();
-	return processor(source, rules, opts) || parser(source, rules, opts);
+	const syntax = getLang(opts, source);
+	const syntaxOpts = Object.assign({}, opts, syntax.opts);
+	let root;
+	if (syntax.extract) {
+		root = processor(source, syntax.extract, syntaxOpts);
+		root.source.lang = syntax.extract;
+	} else {
+		root = parser(source, syntax.lang, syntaxOpts);
+		root.source.lang = syntax.lang;
+	}
+	return root;
 }
 
 module.exports = parse;

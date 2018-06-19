@@ -32,10 +32,6 @@ describe("api", () => {
 			rules: [
 				{
 					test: /.*/,
-					extract: () => null,
-				},
-				{
-					test: /.*/,
 					extract: "html",
 				},
 			],
