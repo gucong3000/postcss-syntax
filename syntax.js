@@ -1,6 +1,7 @@
 "use strict";
 const stringify = require("./stringify");
 const parseStyle = require("./parse-style");
+const normalOpts = require("./normal-opts");
 
 module.exports = (extract, lang) => {
 	const defaultConfig = {
@@ -8,16 +9,10 @@ module.exports = (extract, lang) => {
 		stylus: "css",
 		babel: "jsx",
 		xml: "html",
-		xsl: "html",
 	};
 	function parse (source, opts) {
 		source = source.toString();
-		if (!opts) {
-			opts = {};
-		}
-		if (!opts.syntax) {
-			opts.syntax = this;
-		}
+		opts = normalOpts(opts, this);
 		const document = parseStyle(source, opts, extract(source, opts));
 		document.source.lang = lang;
 		return document;

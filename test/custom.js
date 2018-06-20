@@ -1,11 +1,13 @@
 "use strict";
 const expect = require("chai").expect;
 const Module = require("module");
-const _findPath = Module._findPath;
+let _findPath;
 let syntax;
 
 describe("custom language", () => {
 	before(() => {
+		_findPath = Module._findPath;
+
 		Module._findPath = (request, paths, isMain) => {
 			if (request === "postcss-jsx") {
 				return null;
@@ -16,9 +18,11 @@ describe("custom language", () => {
 		delete require.cache[require.resolve("../")];
 		syntax = require("../");
 	});
+
 	after(() => {
-		Module._findPath = Module._findPath;
+		Module._findPath = _findPath;
 	});
+
 	it("custom.postcss", () => {
 		const code = "a { display: block; }";
 		const document = syntax({

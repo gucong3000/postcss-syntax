@@ -2,55 +2,12 @@
 const expect = require("chai").expect;
 const syntax = require("../");
 
-// https://github.com/Microsoft/vscode/blob/master/extensions/xml/package.json
 // https://github.com/Microsoft/vscode/blob/master/extensions/css/package.json
 // https://github.com/Microsoft/vscode/blob/master/extensions/less/package.json
-// https://github.com/vuejs/vetur/blob/master/package.json
-const normalCode = {
-	xml: `
-		<?xml version="1.0" standalone="no"?>
-		<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
-		"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 
-		<svg width="100%" height="100%" version="1.1"
-		xmlns="http://www.w3.org/2000/svg">
-
-		<rect width="300" height="100"
-		style="fill:rgb(0,0,255);stroke-width:1;
-		stroke:rgb(0,0,0)"/>
-
-		</svg>
-	`,
-	xsl: `
-		<?xml version='1.0'?>
-		<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-
-		<xsl:template match="book">
-			<HTML>
-			<HEAD>
-				<TITLE>Book Info</TITLE>
-				<STYLE>
-						H1 {
-							font-family: Arial,Univers,sans-serif;
-							font-size: 36pt
-						}
-				</STYLE>
-			</HEAD>
-			<BODY><xsl:apply-templates/></BODY>
-			</HTML>
-		</xsl:template>
-
-		<xsl:template match="book_title">
-			<H1><xsl:value-of select="."/></H1>
-		</xsl:template>
-
-		</xsl:stylesheet>
-	`,
-	stylus: "a { display: block; }",
-};
 function testcase (lang, extensions, source) {
 	describe(lang, () => {
-		const code = normalCode[lang] || "";
+		const code = "";
 		extensions.forEach(ext => {
 			const file = ext.replace(/^\.*/, "empty.");
 			it(file, () => {
@@ -83,6 +40,9 @@ describe("language tests", () => {
 		".mdown",
 		".markdown",
 		".markdn",
+		// https://github.com/jshttp/mime-db/blob/master/db.json
+		// text/x-markdown
+		".mkd",
 	], [
 		"# asdadsad",
 		"# asdadsad\n",
@@ -104,13 +64,29 @@ describe("language tests", () => {
 		".volt",
 		".ejs",
 		".rhtml",
+		// https://github.com/jshttp/mime-db/blob/master/db.json
+		// application/xhtml+xml
+		".xht",
+		// https://github.com/Microsoft/vscode/blob/master/extensions/xml/package.json
+		".xsl",
+		".xslt",
+		// https://vue-loader.vuejs.org/spec.html
 		// https://github.com/vuejs/vetur/blob/master/package.json
-		// *.Vue	Single-File Component (SFC) Spec	https://vue-loader.vuejs.org/spec.html
 		".vue",
-		// *.ux		quickapp	https://doc.quickapp.cn/framework/source-file.html
+		// https://doc.quickapp.cn/framework/source-file.html
 		".ux",
 		// https://github.com/Tencent/wepy/blob/master/docs/md/doc.md#wpy文件说明
 		".wpy",
+		// https://github.com/mblode/vscode-twig-language/blob/master/package.json
+		".twig",
+		// https://github.com/GingerBear/vscode-liquid/blob/master/package.json
+		".liquid",
+		// https://github.com/Microsoft/vscode/blob/master/extensions/php/package.json
+		".php",
+		".php4",
+		".php5",
+		".phtml",
+		".ctp",
 	], [
 		"<!DOCTYPE html PUBLIC\n\t\"-//W3C//DTD XHTML 1.1//EN\"\n\t\"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">",
 		"<!DOCTYPE html>",
@@ -119,29 +95,59 @@ describe("language tests", () => {
 		"<HTML>",
 		"<body></body>",
 		"<template></template>",
+		"<div class=\"btn\"></div>",
+		"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\"\n\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">",
+		"<?xml version=\"1.0\"?>\n<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n</xsl:stylesheet>",
+		"<?xml version=\"1.0\"?>\n<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">",
+		"<?xml version=\"1.0\"?>\n<xsl:stylesheet>",
+		"<?xml version=\"1.0\"?></xsl:stylesheet>",
+		"<?php /*php followed by space*/ echo \"a\"?>",
+		"<?php\necho \"Hello world\";",
+		"<?php",
+		"<?xxx?>\n<!DOCTYPE html>",
 	]);
 
 	testcase("jsx", [
-		// https://github.com/Microsoft/vscode/blob/master/extensions/javascript/package.json
-		// javascriptreact
-		".jsx",
+		// https://github.com/michaelgmcd/vscode-language-babel/blob/master/package.json
 		// javascript
 		".js",
 		".es6",
 		".mjs",
 		".pac",
+		// javascriptreact
+		".jsx",
 		// https://github.com/Microsoft/vscode/blob/master/extensions/typescript-basics/package.json
-		// typescriptreact
-		".tsx",
 		// typescript
 		".ts",
+		// typescriptreact
+		".tsx",
+		// https://github.com/michaelgmcd/vscode-language-babel/blob/master/package.json
+		".babel",
+		".flow",
 	], [
 		"#!/usr/bin/env node",
+		"#!~/.nvm/versions/node/v8.9.1/bin/node",
+		"#!/c/Program Files/nodejs/node.exe",
+
 		"\"use strict\";",
 		"'use strict';",
 		"\"use strict\"",
 		"'use strict'",
 		"\"use strict\";\nalert(0)",
+
+		"// @flow\n'use strict';",
+		"/* @flow */\n'use strict';",
+		"// @flow\n/* @flow */'use strict';",
+
+		"// @flow\nrequire('flow');",
+		"/* @flow */\nrequire('flow');",
+		"// @flow\n/* @flow */require('flow');",
+
+		"// @flow\nimport('flow');",
+		"/* @flow */\nimport('flow');",
+		"// @flow\n/* @flow */import('flow');",
+
+		"import React from 'react'",
 		"import defaultExport from \"module-name\";",
 		"import * as name from \"module-name\";",
 		"import { export } from \"module-name\";",
@@ -151,6 +157,9 @@ describe("language tests", () => {
 		"import defaultExport, { export [ , [...] ] } from \"module-name\";",
 		"import defaultExport, * as name from \"module-name\";",
 		"import \"module-name\";",
+		"import styled from 'styled-components';export default styled.div`padding-left: 10px; padding: 20px`;",
+
+		"const styled=require('styled-components');module.exports=styled.div`padding-left: 10px; padding: 20px`;",
 		"require('a');",
 		"var a = require('a');",
 		"var a=require('a');",
@@ -163,10 +172,10 @@ describe("language tests", () => {
 		// acss(AntFinancial Style Sheet) See: https://docs.alipay.com/mini/framework/acss
 		// `*.pcss`, `*.postcss`
 		".css",
-		".acss",
-		".wxss",
 		".pcss",
 		".postcss",
+		".acss",
+		".wxss",
 		".Unknown",
 	], [
 		"",
@@ -235,17 +244,6 @@ describe("language tests", () => {
 	], [
 		"<?xml version=\"1.0\"?>",
 		"<?xml?>",
-	]);
-
-	testcase("xsl", [
-		// https://github.com/Microsoft/vscode/blob/master/extensions/xml/package.json
-		".xsl",
-		".xslt",
-	], [
-		"<?xml version=\"1.0\"?>\n<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n</xsl:stylesheet>",
-		"<?xml version=\"1.0\"?>\n<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">",
-		"<?xml version=\"1.0\"?>\n<xsl:stylesheet>",
-		"<?xml version=\"1.0\"?></xsl:stylesheet>",
 	]);
 
 	testcase("stylus", [

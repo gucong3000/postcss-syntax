@@ -3,17 +3,22 @@
 const parser = require("./parser");
 const processor = require("./processor");
 const getLang = require("./get-lang");
+const normalOpts = require("./normal-opts");
+
+function getSyntax (opts, source) {
+	const rules = opts.syntax && opts.syntax.config && opts.syntax.config.rules;
+	const file = opts.from || "";
+	return (rules && rules.find(
+		rule => rule.test.test ? rule.test.test(file) : rule.test(file, source)
+	)) || getLang(file, source) || {
+		lang: "css",
+	};
+}
 
 function parse (source, opts) {
-	if (!opts) {
-		opts = {};
-	}
-	if (!opts.syntax) {
-		opts.syntax = this;
-	}
-
 	source = source.toString();
-	const syntax = getLang(opts, source);
+	opts = normalOpts(opts, this);
+	const syntax = getSyntax(opts, source);
 	const syntaxOpts = Object.assign({}, opts, syntax.opts);
 	let root;
 	if (syntax.extract) {
