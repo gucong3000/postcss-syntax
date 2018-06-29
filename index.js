@@ -7,7 +7,6 @@ const defaultConfig = {
 	stylus: "css",
 	babel: "jsx",
 	xml: "html",
-	xsl: "html",
 };
 
 try {
