@@ -81,6 +81,8 @@ describe("language tests", () => {
 		".twig",
 		// https://github.com/GingerBear/vscode-liquid/blob/master/package.json
 		".liquid",
+		// https://github.com/UnwrittenFun/svelte-vscode/blob/master/package.json
+		".svelte",
 		// https://github.com/Microsoft/vscode/blob/master/extensions/php/package.json
 		".php",
 		".php4",

@@ -76,7 +76,8 @@
     ".md",
     ".mdown",
     ".markdown",
-    ".markdn"
+    ".markdn",
+    ".svelte"
   ],
   "peerDependencies": {
     "postcss": ">=5.0.0"

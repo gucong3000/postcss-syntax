@@ -31,7 +31,8 @@ const extracts = {
 	// *.php*	PHP			https://github.com/Microsoft/vscode/blob/master/extensions/php/package.json
 	// *.twig	Twig		https://github.com/mblode/vscode-twig-language/blob/master/package.json
 	// *.liquid	Liquid		https://github.com/GingerBear/vscode-liquid/blob/master/package.json
-	html: /^(?:\w*html?|xht|xslt?|mdoc|jsp|aspx?|volt|ejs|vue|wpy|ux|php\d*|ctp|twig|liquid)$/i,
+	// *.svelte Svelte		https://github.com/UnwrittenFun/svelte-vscode/blob/master/package.json
+	html: /^(?:\w*html?|xht|xslt?|mdoc|jsp|aspx?|volt|ejs|vue|wpy|ux|php\d*|ctp|twig|liquid|svelte)$/i,
 	// https://github.com/Microsoft/vscode/blob/master/extensions/markdown-basics/package.json
 	markdown: /^(?:m(?:ark)?d(?:ow)?n|mk?d)$/i,
 	// https://github.com/Microsoft/vscode/blob/master/extensions/xml/package.json
