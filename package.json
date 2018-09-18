@@ -1,6 +1,6 @@
 {
   "name": "postcss-syntax",
-  "version": "0.33.0",
+  "version": "0.34.0",
   "description": "Automatically switch PostCSS syntax by file extensions",
   "repository": {
     "type": "git",
@@ -28,7 +28,9 @@
     "check-coverage": true
   },
   "scripts": {
-    "test": "nyc mocha --require ./test/fixtures/link --no-timeouts"
+    "mocha": "mocha --require ./test/fixtures/link --no-timeouts",
+    "test": "nyc npm run mocha",
+    "debug": "npm run mocha -- --inspect-brk"
   },
   "extensions": [
     ".css",
@@ -84,17 +86,17 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "codecov": "^3.0.4",
+    "codecov": "^3.1.0",
     "mocha": "^5.2.0",
-    "nyc": "^12.0.2",
+    "nyc": "^13.0.1",
     "postcss": "^7.0.2",
-    "postcss-html": ">=0.33.0",
-    "postcss-jsx": ">=0.33.0",
+    "postcss-html": ">=0.34.0",
+    "postcss-jsx": ">=0.34.0",
     "postcss-less": "^2.0.0",
-    "postcss-markdown": ">=0.33.0",
+    "postcss-markdown": ">=0.34.0",
     "postcss-safe-parser": "^4.0.1",
     "postcss-scss": "^2.0.0",
-    "proxyquire": "^2.0.1",
+    "proxyquire": "^2.1.0",
     "sugarss": "^2.0.0"
   }
 }
