@@ -49,7 +49,7 @@ function sourceType (source) {
 		// start with strict mode
 		// start with import code
 		// start with require code
-		/^(?:(?:\/\/[^\r\n]*\r?\n|\/\*.*?\*\/)\s*)*(?:(?:("|')use strict\1|import(?:\s+[^;]+\s+from)?\s+("|')[^'"]+?\2)\s*(;|\r?\n|$)|(?:(?:var|let|const)\s+[^;]+\s*=\s*)?(?:require|import)\(.+\))/.test(source) ||
+		/^(?:(?:\/\/[^\r\n]*\r?\n|\/\*.*?\*\/)\s*)*(?:(?:("|')use strict\1|import(?:\s+[^;]+\s+from)?\s+("|')[^'"]+?\2|export\s+[^;]+\s+[^;]+)\s*(;|\r?\n|$)|(?:(?:var|let|const)\s+[^;]+\s*=\s*)?(?:require|import)\(.+\))/.test(source) ||
 		// https://en.wikipedia.org/wiki/Shebang_(Unix)
 		(/^#!([^\r\n]+)/.test(source) && /(?:^|\s+|\/)(?:ts-)?node(?:\.\w+)?(?:\s+|$)$/.test(RegExp.$1))
 	) {

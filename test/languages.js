@@ -167,6 +167,24 @@ describe("language tests", () => {
 		"var a=require('a');",
 		"import(\"a\");",
 		"const a = import('a');",
+		// https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export
+		// https://github.com/tc39/proposal-export-default-from
+		// https://www.npmjs.com/package/babel-plugin-transform-export-extensions
+		"export var v;",
+		"export default function f(){}",
+		"export default function(){}",
+		"export default class {}",
+		"export default 42;",
+		"export defaultExport from \"module-name\";",
+		"export { named };",
+		"export { named as alias };",
+		"export { named } from \"module-name\";",
+		"export { named as alias } from \"module-name\";",
+		"export { named1, namedExport2 } from \"module-name\";",
+		"export { named1, named2 as alias2, [...] } from \"module-name\";",
+		"export * from \"module-name\"",
+		"export * as defaultExport from \"module-name\"",
+		"export defaultExport, { named1, named2 as alias2 } from \"module-name\";"
 	]);
 
 	testcase("css", [
