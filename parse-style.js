@@ -56,15 +56,14 @@ class LocalFixer {
 		try {
 			root = syntax.parse(style.content, Object.assign({}, opts, {
 				map: false,
-			}));
+			}, style.opts));
 		} catch (error) {
 			if (style.ignoreErrors) {
 				return;
-			} else if (style.skipConvert) {
-				throw error;
-			} else {
-				throw this.error(error);
+			} else if (!style.skipConvert) {
+				this.error(error);
 			}
+			throw error;
 		}
 		if (!style.skipConvert) {
 			this.root(root);
