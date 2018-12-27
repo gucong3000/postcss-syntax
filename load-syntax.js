@@ -9,8 +9,12 @@ function loadSyntax (opts, id) {
 	if (!syntax) {
 		syntax = {
 			parse: require(modulePath),
-			stringify: cssSyntax.stringify,
 		};
+		try {
+			syntax.stringify = require(id + "/template-stringify");
+		} catch (ex) {
+			syntax.stringify = cssSyntax.stringify;
+		}
 		cache[modulePath] = syntax;
 	}
 	return syntax;
