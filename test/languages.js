@@ -184,7 +184,7 @@ describe("language tests", () => {
 		"export { named1, named2 as alias2, [...] } from \"module-name\";",
 		"export * from \"module-name\"",
 		"export * as defaultExport from \"module-name\"",
-		"export defaultExport, { named1, named2 as alias2 } from \"module-name\";"
+		"export defaultExport, { named1, named2 as alias2 } from \"module-name\";",
 	]);
 
 	testcase("css", [
