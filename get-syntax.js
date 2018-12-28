@@ -23,7 +23,7 @@ function requireSyntax (syntax) {
 		return cssSyntax();
 	} else if (/^sugarss$/i.test(syntax)) {
 		syntax = "sugarss";
-	} else if (path.isAbsolute(syntax) || syntax.startsWith(".")) {
+	} else if (path.isAbsolute(syntax) || syntax[0] === ".") {
 		syntax = path.resolve(syntax);
 	} else {
 		syntax = syntax.toLowerCase().replace(/^(?:postcss-)?(\w+)/i, "postcss-$1");
