@@ -9,12 +9,6 @@ const defaultConfig = {
 	xml: "html",
 };
 
-try {
-	require.resolve("postcss-jsx");
-} catch (ex) {
-	defaultConfig.jsx = "styled";
-}
-
 function initSyntax (syntax) {
 	syntax.stringify = stringify.bind(syntax);
 	syntax.parse = parse.bind(syntax);
