@@ -187,7 +187,10 @@ describe("document tests", () => {
 			"</html>",
 		].join("\n");
 		return postcss([
-			root => {
+			(root, result) => {
+				result.warn("test", {
+					node: root,
+				});
 				return Promise.resolve().then(() => {
 					root.nodes = [];
 				});
@@ -196,6 +199,11 @@ describe("document tests", () => {
 			syntax: syntax,
 			from: "async_plugin.html",
 		}).then(result => {
+			expect(result.messages).to.have.lengthOf(2);
+			result.messages.forEach((msg, i) => {
+				expect(msg.text).to.equal("test");
+				expect(msg.node).to.equal(result.root.nodes[i]);
+			});
 			expect(result.content).to.equal([
 				"<html>",
 				"<style>",

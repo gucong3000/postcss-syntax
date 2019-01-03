@@ -1,6 +1,6 @@
 {
   "name": "postcss-syntax",
-  "version": "0.36.0",
+  "version": "0.36.1",
   "description": "Automatically switch PostCSS syntax by file extensions",
   "repository": {
     "type": "git",

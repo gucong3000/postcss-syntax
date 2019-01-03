@@ -1,26 +1,25 @@
 "use strict";
 const path = require("path");
 const patched = {};
+
 function isPromise (obj) {
 	return typeof obj === "object" && typeof obj.then === "function";
 }
 
 function runDocument (plugin) {
-	let result = this.result;
+	const result = this.result;
 	result.lastPlugin = plugin;
-	result = result.root.nodes.map(root => {
-		const childResult = root.toResult(result.opts);
+	const promise = result.root.nodes.map(root => {
 		try {
-			return plugin(root, childResult);
+			return plugin(root, result);
 		} catch (error) {
 			this.handleError(error, plugin);
 			throw error;
 		}
 	});
-	if (result.some(isPromise)) {
-		result = Promise.all(result);
+	if (promise.some(isPromise)) {
+		return Promise.all(promise);
 	}
-	return result;
 }
 
 function patchDocument (Document, LazyResult) {
