@@ -49,7 +49,7 @@ const syntax = require('postcss-syntax')({
 			extract: 'markdown',
 		},
 		{
-			test: /\.(?:m?[jt]sx?|es\d*|pac)$/i,
+			test: /\.(?:[cm]?[jt]sx?|es\d*|pac)$/i,
 			extract: 'jsx',
 		},
 		{

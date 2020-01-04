@@ -22,7 +22,7 @@ const extracts = {
 	// https://github.com/Microsoft/vscode/blob/master/extensions/javascript/package.json
 	// https://github.com/Microsoft/vscode/blob/master/extensions/typescript-basics/package.json
 	// https://github.com/michaelgmcd/vscode-language-babel/blob/master/package.json
-	jsx: /^(?:m?[jt]sx?|es\d*|pac|babel|flow)$/i,
+	jsx: /^(?:[cm]?[jt]sx?|es\d*|pac|babel|flow)$/i,
 	// *.*html?	HTML		https://github.com/Microsoft/vscode/blob/master/extensions/html/package.json
 	// *.xslt?	XSLT		https://msdn.microsoft.com/en-us/library/ms764661(v=vs.85).aspx
 	// *.vue	VUE 		https://vue-loader.vuejs.org/spec.html

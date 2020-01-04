@@ -110,11 +110,12 @@ describe("language tests", () => {
 	]);
 
 	testcase("jsx", [
-		// https://github.com/michaelgmcd/vscode-language-babel/blob/master/package.json
+		// https://github.com/Microsoft/vscode/blob/master/extensions/javascript/package.json
 		// javascript
 		".js",
 		".es6",
 		".mjs",
+		".cjs",
 		".pac",
 		// javascriptreact
 		".jsx",
