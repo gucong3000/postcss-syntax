@@ -96,6 +96,7 @@
     "postcss-less": "^3.1.0",
     "postcss-markdown": ">=0.36.0",
     "postcss-safe-parser": "^4.0.1",
+    "postcss-sass": "^0.4.4",
     "postcss-scss": "^2.0.0",
     "proxyquire": "^2.1.0",
     "sugarss": "^2.0.0"
