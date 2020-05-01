@@ -35,7 +35,14 @@ function patchNode (Node) {
 	Node = Node.prototype;
 	const NodeToString = Node.toString;
 	Node.toString = function toString (stringifier) {
-		return NodeToString.call(this, stringifier || this.root().source.syntax);
+		let arg = stringifier;
+		if (!arg) {
+			const source = this.root().source;
+			if (source) {
+				arg = source.syntax;
+			}
+		}
+		return NodeToString.call(this, arg);
 	};
 }
 
