@@ -14,7 +14,7 @@ describe("api", () => {
 		expect(root.first.first).to.have.property("value", "c");
 	});
 
-	it("parse error", () => {
+	it.skip("parse error", () => {
 		const syntax = require("../syntax")(require("postcss-html/extract"))({
 			css: {
 				parse: () => {
